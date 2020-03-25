@@ -8,6 +8,9 @@ app.get('/', (req, res)=>{
   res.send('<h1>Hello world</h1>');
 });
 
-server.listen(port, ()=>{
+server.listen(port, (err)=>{
+  if (err) {
+    return console.log(`Error! Something went wrong.`)
+  }
   console.log(`Server is available on localhost:${port}`);
 });

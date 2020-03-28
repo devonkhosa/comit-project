@@ -7,14 +7,14 @@ const port = 3000;
 //Extra; provides colour to the console.log output.
 const colors = require('colors');
 
-
+// __dirname allows you to get the pwd
 app.get('/', (req, res)=>{
-  res.send('<h1>Hello world</h1>');
+  res.sendFile(__dirname + '/index.html');
 });
 
 server.listen(port, (err)=>{
   if (err) {
     return console.log(`Error! Something went wrong.`)
   }
-  console.log('Chat is online:', ('=====>'.rainbow), (`localhost:${port}/`.underline.cyan), ('<====='.rainbow));
+  console.log('Chat is online:', ('=====>'.rainbow), (`http://localhost:${port}/`.underline.cyan), ('<====='.rainbow));
 });

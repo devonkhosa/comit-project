@@ -12,14 +12,24 @@ app.get('/', (req, res)=>{
   res.sendFile(__dirname + '/index.html');
 });
 
-//socket.io
+//socket.io -> user connection console log
 io.on('connection', (socket)=>{
   console.log('a user', ('connected'.green));
+  socket.on('disconnect', (socket)=>{
+    console.log('a user', ('disconnected'.red));
+  });
 }); 
 
-http.listen(3000, (err)=>{
+//socket.io -> message console log
+io.on('connection', (socket)=>{
+  socket.on('chat message', (msg)=>{
+    console.log(('Message: '.blue) + msg.grey);
+  })
+})
+
+http.listen(port, (err)=>{
   if (err) {
     return console.log(`Error! Something went wrong.`.bgRed)
   }
-  console.log('Chat is online:', ('=====>'.rainbow), (`http://localhost:${3000}/`.underline.cyan), ('<====='.rainbow));
+  console.log('Chat is online:', ('=====>'.rainbow), (`http://localhost:${port}/`.underline.cyan), ('<====='.rainbow));
 });

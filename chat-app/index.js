@@ -12,5 +12,5 @@ server.listen(port, (err)=>{
   if (err) {
     return console.log(`Error! Something went wrong.`)
   }
-  console.log(`Server is available on localhost:${port}`);
+  console.log(` is available on localhost: ${port}.`);
 });

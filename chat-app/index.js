@@ -3,13 +3,14 @@ const app = express();
 const http = require('http').createServer(app);
 const port = 3000;
 const io = require('socket.io')(http);
+const pug = require('pug');
 
 //Extra; provides colour to the console.log output.
 const colors = require('colors');
 
 // __dirname allows you to get the pwd
 app.get('/', (req, res)=>{
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/main/index.html');
 });
 
 //socket.io -> user connection console log
@@ -26,6 +27,12 @@ io.on('connection', (socket)=>{
     console.log(('Message: '.blue) + msg.grey);
   })
 })
+
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+  });
+});
 
 http.listen(port, (err)=>{
   if (err) {

@@ -5,6 +5,9 @@ const port = 3000;
 const io = require('socket.io')(http);
 const pug = require('pug');
 
+//pug compile sourcecode <--
+
+
 //Extra; provides colour to the console.log output.
 const colors = require('colors');
 

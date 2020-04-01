@@ -1,1 +1,26 @@
 extend ../views/template.pug
+
+block content
+    .container
+     .jumbotron.text-center
+        .container0
+        h1.display-4 Hello, world!
+        .container1
+        p.lead This is a simple chat application using Bootstrap, Express.js, Socket.io, and MongoDB.
+        hr.my-4
+        p Click the button below to get started!
+        .container
+            button.btn.btn-success.btn-lg.btn-block.shadow-lg(type='button' data-toggle='modal' data-target='#exampleModalCenter') Enter Chat
+    
+    #exampleModalCenter.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h1#exampleModalCenterTitle.text-center.modal-title.text-danger DISCLAIMER
+                    button.close(type='button' data-dismiss='modal' aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body
+                    p This is one of my first projects, so there could be a few bugs (or a feature, depending how you see it). Proceed at your own risk!
+                .modal-footer
+                    button.btn.btn-secondary(type='button' data-dismiss="modal") Nevermind
+                    a.btn.btn-primary(href="/node") Continue

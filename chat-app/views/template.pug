@@ -1,24 +1,19 @@
 html
     head
-        link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
-        link(rel='stylesheet' href='css/styles.css')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
+    link(rel='stylesheet' href='css/styles.css')
 body
-nav.navbar.navbar-dark.bg-dark
-    ul.nav.nav-tabs
-        li.nav-item
-        a.nav-link.active(href='/home') Home
-        li.nav-item.dropdown
-        a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') Chatrooms
-        .dropdown-menu
-            a.dropdown-item(href='/general') General
-            .dropdown-divider
-            a.dropdown-item(href='/random') Random
-            .dropdown-divider
-            a.dropdown-item(href='/node') NodeBC
-        li.nav-item
-        a.nav-link(href='/about')
-            strong About This Project.
-            block content
-    script(src='https://code.jquery.com/jquery-3.4.1.slim.min.js' integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n' crossorigin='anonymous')
-    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo' crossorigin='anonymous')
-    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js' integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6' crossorigin='anonymous')
+ .pos-f-t
+  #navbarToggleExternalContent.collapse
+    .bg-dark.p-4
+      a.button.btn.btn-primary(href='/home') Home
+      a.button.btn.btn-secondary(href='/about') About
+  nav.navbar.navbar-dark.bg-dark
+    button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarToggleExternalContent' aria-controls='navbarToggleExternalContent' aria-expanded='false' aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+.container
+block content

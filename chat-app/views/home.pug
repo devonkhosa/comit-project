@@ -3,20 +3,20 @@ extend ../views/template.pug
 block content
     .container
      .jumbotron.text-center
-        .container0
+        .container
         h1.display-4 Hello, world!
-        .container1
+        .container
         p.lead This is a simple chat application using Bootstrap, Pug, Express.js, Socket.io, and MongoDB.
         hr.my-4
         p Click the button below to get started!
         .container
-            button.btn.btn-success.btn-lg.btn-block.shadow-lg(type='button' data-toggle='modal' data-target='#exampleModalCenter') Enter Chat
+            button.btn.btn-success.btn-lg.btn-block.shadow-lg(type='button' data-toggle='modal' data-target='#modalHome') Enter Chat
     
-    #exampleModalCenter.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true')
+    #modalHome.modal.fade(tabindex='-1' role='dialog' aria-labelledby='modalHome' aria-hidden='true')
         .modal-dialog(role='document')
             .modal-content
                 .modal-header
-                    h1#exampleModalCenterTitle.text-center.modal-title.text-danger DISCLAIMER
+                    h1#modalHome.text-center.modal-title.text-danger DISCLAIMER
                     button.close(type='button' data-dismiss='modal' aria-label='Close')
                     span(aria-hidden='true') &times;
                 .modal-body

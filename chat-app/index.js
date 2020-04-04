@@ -1,36 +1,57 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
-const http = require('http').createServer(app);
+const http = require("http").createServer(app);
 const port = 3000;
-const io = require('socket.io')(http);
-const pug = require('pug');
-
-//Mongoose
-const dbUrl = 'mongodb://devonkhosa:megaman12@nodebc-shard-00-00-c6sqh.mongodb.net:27017,nodebc-shard-00-01-c6sqh.mongodb.net:27017,nodebc-shard-00-02-c6sqh.mongodb.net:27017/test?ssl=true&replicaSet=nodebc-shard-0&authSource=admin&retryWrites=true&w=majority';
-const Message = mongoose.model('Message', { name : String, message : String});
-mongoose.connect(dbUrl , (err) => { 
-  console.log('mongodb connected', err);
-})
+const io = require("socket.io")(http);
+const pug = require("pug");
+const mongo = require("mongoose");
 
 //middleware
-app.set('view engine', 'pug')
-app.use(express.static('public'))
+app.set("view engine", "pug")
+app.use(express.static("public"))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.get("/messages", (req, res) => {
+  Message.find({},(err, messages)=> {
+    res.send(messages);
+  });
+});
+app.get("/messages", (req, res) => {
+  Message.find({},(err, messages)=> {
+    res.send(messages);
+  });
+});
+app.post("/messages", (req, res) => {
+  var message = new Message(req.body);
+  message.save((err) =>{
+    if(err)
+      sendStatus(500);
+    io.emit("message", req.body);
+    res.sendStatus(200);
+  });
+});
+const home = require("./routes/home");
+const nodebcChat = require("./routes/nodebcChat");
+const about = require("./routes/about");
+app.get("/home", home);
+app.get("/node", nodebcChat);
+app.get("/about", about);
+
+//Mongoose
+const Message = mongo.model("Message", {
+  name : String,
+  message : String
+});
+
+const dbUrl = 'mongodb+srv://nodebc:nodebc1@nodebc-c6sqh.mongodb.net/test?retryWrites=true&w=majority';
+
+//Render homepage at / directory
 app.get('/', (req, res)=> {
   res.render('home');
 })
 
-//modules
-const home = require('./routes/home');
-const nodebcChat = require('./routes/nodebcChat');
-const about = require('./routes/about');
 
-app.get('/home', home);
-app.get('/node', nodebcChat);
-app.get('/about', about);
 
 //displays messages
 io.on('connection', (io)=>{
@@ -39,7 +60,9 @@ io.on('connection', (io)=>{
   });
 });
 
-//socket.io -> user connection console log
+
+
+//socket.io -> user connection/disconnection console log
 io.on('connection', (io)=>{
   console.log('a user', ('connected'.green));
   io.on('disconnect', (io)=>{
@@ -47,11 +70,9 @@ io.on('connection', (io)=>{
   });
 }); 
 
-//socket.io -> message console log
-io.on('connection', (io)=>{
-  io.on('chat message', (msg)=>{
-    console.log(('Message: '.blue) + msg.grey);
-  });
+mongo.connect(dbUrl, {
+  useUnifiedTopology: true, useNewUrlParser: true}, (err)=>{
+  console.log('MongoDB'+' connected.'.green)
 });
 
 http.listen(port, (err)=>{

@@ -61,12 +61,6 @@ body {
   to   { opacity: .9; }
 }
 
-/* Internet Explorer */
-@-ms-keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: .9; }
-}
-
 /* Opera < 12.1 */
 @-o-keyframes fadein {
   from { opacity: 0; }

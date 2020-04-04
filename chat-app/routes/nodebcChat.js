@@ -1,5 +1,5 @@
 const nodebcChat = (req, res) => {
-    res.render('node');
-}
+    res.render("node");
+};
 
 module.exports = nodebcChat;

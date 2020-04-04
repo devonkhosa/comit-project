@@ -1,5 +1,5 @@
 const about = (req, res) => {
-    res.render('about');
-}
+    res.render("about");
+};
 
 module.exports = about

@@ -1,3 +1,47 @@
 extend ../views/template.pug
 
 block content
+    head
+    link(rel='stylesheet' href='css/chat.css')
+    body
+    script(src="/socket.io/socket.io.js")
+    .chat_window
+      .top_menu
+        .buttons
+          .button.close
+          .button.minimize
+          .button.maximize
+        .title NodeBC Chat
+      .jumbotronChat
+        p.display-10 Send a message by filling out the boxes below!
+        br
+        input#name.form-control(placeholder="Name")
+        br
+        textarea#message.form-control(placeholder="Message")
+        br
+        button#send.btn.btn-success.btn-lg.btn-block Submit
+        button#messageDelete.btn.btn-success.btn-lg.btn-block(href="../routes/nodebcChat") Clear
+      #messages(href="../routes/nodebcChat")
+      script.
+        var socket = io();
+        $(() => {
+        $("#send").click(()=>{
+        sendMessage({name: $("#name").val(), message: $("#message").val()});
+        })
+        getMessages()
+        })
+        $("#clear").click(()=>{
+        clearMessage({name: $("#name").val(), message: $("#message").val()});
+        })
+        socket.on('message', addMessages)
+        function addMessages(message){
+        $("#messages").append(`<h5> ${message.name} </h5> <p> ${message.message} </p>`)
+        }
+        function getMessages(){
+        $.get('http://localhost:3000/messages', (data) => {
+        data.forEach(addMessages);
+        })
+        }
+        function sendMessage(message){
+        $.post('http://localhost:3000/messages', message)
+        }

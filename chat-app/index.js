@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
@@ -5,17 +6,50 @@ const http = require("http").createServer(app);
 const port = 3000;
 const io = require("socket.io")(http);
 const pug = require("pug");
-const mongo = require("mongoose");
+const mongoose = require("mongoose");
+
+const Message = mongoose.model("Message", {
+  name : String,
+  message : String
+});
 
 //middleware
 app.set("view engine", "pug");
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.get("/messages", (req, res) => {
-  Message.find({},(err, messages) => {
-    res.send(messages);
+
+const home = require("./routes/home");
+const nodebcChat = require("./routes/nodebcChat");
+const about = require("./routes/about");
+const messageDelete = require("./routes/nodebcChat");
+
+app.get("/home", home);
+app.get("/node/", nodebcChat);
+app.get("/about", about);
+app.get("/node/", messageDelete);
+
+let uri = process.env.dbURL;
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+
+
+//Render homepage at / directory
+app.get("/", (req, res) => {
+  res.render("home");
+});
+
+//socket.io -> user connection/disconnection console log
+io.on("connection", (io) => {
+  console.log("a user", ("connected".green));
+  io.on("disconnect", (io ) => {
+    console.log("a user", ("disconnected".red));
   });
+}); 
+
+mongoose.connect(uri, {
+  useUnifiedTopology: true, useNewUrlParser: true}, (err) => {
+  console.log("MongoDB"+" connected.".green)
 });
 
 app.post("/messages", (req, res) => {
@@ -33,48 +67,18 @@ app.get("/messages", (req, res) => {
     res.send(messages);
   });
 });
-const home = require("./routes/home");
-const nodebcChat = require("./routes/nodebcChat");
-const about = require("./routes/about");
-app.get("/home", home);
-app.get("/node", nodebcChat);
-app.get("/about", about);
 
-//Mongoose
-const Message = mongo.model("Message", {
-  name : String,
-  message : String
+
+app.get("/messages", (req, res) => {
+  Message.find({},(err, messages) => {
+    res.send(messages);
+  });
 });
 
-const dbUrl = "mongodb+srv://nodebc:nodebc1@nodebc-c6sqh.mongodb.net/test?retryWrites=true&w=majority";
-
-//Render homepage at / directory
-app.get("/", (req, res) => {
-  res.render("home");
-});
-
-
-
-//displays messages
-io.on("connection", (io) => {
-  io.on("chat message", (msg) => {
+io.on("connection", (socket) => {
+  socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
   });
-});
-
-
-
-//socket.io -> user connection/disconnection console log
-io.on("connection", (io) => {
-  console.log("a user", ("connected".green));
-  io.on("disconnect", (io ) => {
-    console.log("a user", ("disconnected".red));
-  });
-}); 
-
-mongo.connect(dbUrl, {
-  useUnifiedTopology: true, useNewUrlParser: true}, (err) => {
-  console.log("MongoDB"+" connected.".green)
 });
 
 http.listen(port, (err) => {

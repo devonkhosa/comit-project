@@ -2,4 +2,4 @@ const about = (req, res) => {
     res.render("about");
 };
 
-module.exports = about
+module.exports = about;

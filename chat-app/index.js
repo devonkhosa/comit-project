@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const http = require("http").createServer(app);
-const port = 3000;
+const port = process.env.PORT || 3000;
 const io = require("socket.io")(http);
 const pug = require("pug");
 const mongoose = require("mongoose");
@@ -31,8 +31,6 @@ app.get("/node/", messageDelete);
 
 let uri = 'mongodb+srv://nodebc:nodebc1@nodebc-c6sqh.mongodb.net/test?retryWrites=true&w=majority';
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-
 
 //Render homepage at / directory
 app.get("/", (req, res) => {

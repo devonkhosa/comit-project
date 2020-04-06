@@ -29,7 +29,7 @@ app.get("/node/", nodebcChat);
 app.get("/about", about);
 app.get("/node/", messageDelete);
 
-let uri = process.env.dbURL;
+let uri = 'process.env.dbURL';
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 

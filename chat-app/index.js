@@ -9,13 +9,11 @@ const pug = require("pug");
 const mongoose = require("mongoose");
 const dbURL = 'mongodb+srv://nodebc:nodebc1@nodebc-c6sqh.mongodb.net/test?retryWrites=true&w=majority';
 
-
 const Message = mongoose.model("Message", {
   name : String,
   message : String
 });
 
-//middleware
 app.set("view engine", "pug");
 app.use(express.static("public"));
 app.use(bodyParser.json());

@@ -37,10 +37,10 @@ block content
         $("#messages").append(`<h5> ${message.name} </h5> <p> ${message.message} </p>`)
         }
         function getMessages(){
-        $.get('https://frozen-hollows-58282.herokuapp.com/messages', (data) => {
+        $.get('/messages', (data) => {
         data.forEach(addMessages);
         })
         }
         function sendMessage(message){
-        $.post('https://frozen-hollows-58282.herokuapp.com/messages', message)
+        $.post('/messages', message)
         }

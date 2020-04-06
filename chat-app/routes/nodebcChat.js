@@ -13,7 +13,5 @@ const messageDelete = async (req, res) => {
     res.redirect("/")
 }
 
-
-
 module.exports = messageDelete;
 module.exports = nodebcChat;

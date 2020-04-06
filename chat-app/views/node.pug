@@ -20,7 +20,6 @@ block content
         textarea#message.form-control(placeholder="Message")
         br
         button#send.btn.btn-success.btn-lg.btn-block Submit
-        button#messageDelete.btn.btn-success.btn-lg.btn-block(href="../routes/nodebcChat") Clear
       #messages
       script.
         var socket = io();
@@ -38,10 +37,10 @@ block content
         $("#messages").append(`<h5> ${message.name} </h5> <p> ${message.message} </p>`)
         }
         function getMessages(){
-        $.get('http://10.0.0.6:3000/messages', (data) => {
+        $.get('https://frozen-hollows-58282.herokuapp.com/messages', (data) => {
         data.forEach(addMessages);
         })
         }
         function sendMessage(message){
-        $.post('http://10.0.0.6:3000/messages', message)
+        $.post('https://frozen-hollows-58282.herokuapp.com/messages', message)
         }

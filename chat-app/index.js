@@ -7,6 +7,8 @@ const port = process.env.PORT || 3000;
 const io = require("socket.io")(http);
 const pug = require("pug");
 const mongoose = require("mongoose");
+const dbURL = 'mongodb+srv://nodebc:nodebc1@nodebc-c6sqh.mongodb.net/test?retryWrites=true&w=majority';
+
 
 const Message = mongoose.model("Message", {
   name : String,
@@ -29,7 +31,7 @@ app.get("/node/", nodebcChat);
 app.get("/about", about);
 app.get("/node/", messageDelete);
 
-let uri = 'mongodb+srv://nodebc:nodebc1@nodebc-c6sqh.mongodb.net/test?retryWrites=true&w=majority';
+let uri = dbURL;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 //Render homepage at / directory
@@ -66,12 +68,15 @@ app.get("/messages", (req, res) => {
   });
 });
 
-
 app.get("/messages", (req, res) => {
   Message.find({},(err, messages) => {
     res.send(messages);
   });
 });
+
+app.delete("/messages", ()=> {
+  test.messages.deleteOne()
+})
 
 io.on("connection", (socket) => {
   socket.on("chat message", (msg) => {
@@ -86,3 +91,5 @@ http.listen(port, (err) => {
   }
   console.log("Chat is online:", ("=====>".rainbow), (`http://localhost:${port}/`.underline.cyan), ("<=====".rainbow));
 });
+
+module.exports = dbURL;

@@ -7,3 +7,7 @@ It's a simple chat app using Bootstrap, Pug, Express.js, Socket.io, and MongoDB.
 
  - Make sure to add DB uri into ".env.template" file
  - Rename file to ".env"
+
+click the link below to test it out!
+
+https://frozen-hollows-58282.herokuapp.com/

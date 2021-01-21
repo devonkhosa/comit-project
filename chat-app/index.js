@@ -1,13 +1,14 @@
 require('dotenv').config();
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const http = require("http").createServer(app);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 const io = require("socket.io")(http);
 const pug = require("pug");
 const mongoose = require("mongoose");
-const dbURL = 'mongodb+srv://nodebc:nodebc1@nodebc-c6sqh.mongodb.net/test?retryWrites=true&w=majority';
+const dbURL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.RESTOF}`;
 
 const Message = mongoose.model("Message", {
   name : String,
